@@ -9,23 +9,13 @@
     transform : translate(-50%, -50%);
 
   }
-  .manStyle{
-    position : relative;
-    width: 800px;
-     top : 350px;
-     left : 50%;
-    height: 700px;
-     border: 1px solid black;
-     margin: auto;
-     transform : translate(-50%, -50%);
- 
-  }
 
   #man {
+    position: relative;
     width: 200px;
     height: 200px;
-    transform: translate(140%,150%);
-
+    transform: translate(140%,250%);
+    z-index: 10;
   }
 
   /*#drops {
@@ -39,18 +29,13 @@
     background-size: 20px 40px;
   
     animation: block 1s infinite linear;
-  }
+  } */
 
   #umbrella {
-    width: 20px;
-    height: 40px;
     position: relative;
-    top: 110px;
-    left: 580px;
-  
-    background-image: url("img/businessmanRight.png");
-    background-size: 20px 40px;
-  
-    animation: block 1s infinite linear;
+    width: 180px;
+    height: 180px;
+    transform: translate(65%,218%);
+    z-index: -5;
   }
-  */
+ 

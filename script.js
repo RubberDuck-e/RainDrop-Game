@@ -1,18 +1,23 @@
 let man = document.getElementById("man");
 //let drops = document.getElementById("drops");
-//let umbrella = document.getElementById("umbrella")
-
+let umbrella = document.getElementById("umbrella");
+let umbrellaOpen = true;
 let moveRate = 200;
 
 let manPos = {
     x : 300,
-    y : 300
+    y : 500
 }
-function refreshPosition() {
+function refreshPosition(UmbrellaXOffsetting) {
     let x = manPos.x;
     let y = manPos.y;
    console.log("x"+ x);
    man.style.transform = "translate(" + x + "px," + y +"px)";
+   //umbrella offset
+    x+=UmbrellaXOffsetting;
+    y-=110;
+    console.log("brellax"+ x);
+   umbrella.style.transform = "translate(" + x + "px," + y + "px)";
   }
 
   // Update x-axis position.
@@ -20,15 +25,17 @@ function UpdateXPos(distance) {
     manPos.x = manPos.x + distance;
     // Update x-axis position at the edge.
    
-    if (manPos.x < 100) {
+    if (manPos.x <= 100) {
       manPos.x = 100;
-    } else if (manPos.x > 500) {
+
+    } else if (manPos.x >= 500) {
       manPos.x = 500;
     }
 
   }
 
 window.addEventListener("keydown", function (event) {
+let UmbrellaXOffset = 163;
     if(event.defaultPrevented){
         return;
     }
@@ -36,12 +43,22 @@ window.addEventListener("keydown", function (event) {
         //going right
             document.getElementById("man").src = "img/businessmanRight.png";
             UpdateXPos(moveRate);
-
+            UmbrellaXOffset= -223;
+            refreshPosition(UmbrellaXOffset);
     } else if(event.code === "ArrowLeft"){
         //going Left
             document.getElementById("man").src = "img/businessmanLeft.png";
             UpdateXPos(-moveRate); 
-            
+            UmbrellaXOffset = UmbrellaXOffset*-1;
+            refreshPosition(UmbrellaXOffset);
+    }else if(event.code=== "Space"){
+      //Opening and Closing umbrella
+        if(umbrellaOpen){
+            document.getElementById("umbrella").src = "img/UmbrellaClose.png";
+            umbrellaOpen= false;
+        }else{
+            document.getElementById("umbrella").src = "img/UmbrellaOpen.png";
+            umbrellaOpen = true;
+        }
     }
-    refreshPosition();
   }, true);
