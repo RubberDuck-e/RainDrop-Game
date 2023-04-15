@@ -2,10 +2,10 @@ let man = document.getElementById("man");
 //let drops = document.getElementById("drops");
 //let umbrella = document.getElementById("umbrella")
 
-let moveRate = 80;
+let moveRate = 200;
 
 let manPos = {
-    x : 250,
+    x : 300,
     y : 300
 }
 function refreshPosition() {
@@ -20,10 +20,10 @@ function UpdateXPos(distance) {
     manPos.x = manPos.x + distance;
     // Update x-axis position at the edge.
    
-    if (manPos.x < 0) {
-      manPos.x = 0;
-    } else if (manPos.x > 499) {
-      manPos.x = 499;
+    if (manPos.x < 100) {
+      manPos.x = 100;
+    } else if (manPos.x > 500) {
+      manPos.x = 500;
     }
 
   }
@@ -34,11 +34,14 @@ window.addEventListener("keydown", function (event) {
     }
     if(event.code === "ArrowRight"){
         //going right
-        
+            document.getElementById("man").src = "img/businessmanRight.png";
             UpdateXPos(moveRate);
+
     } else if(event.code === "ArrowLeft"){
         //going Left
-            UpdateXPos(-moveRate);
+            document.getElementById("man").src = "img/businessmanLeft.png";
+            UpdateXPos(-moveRate); 
+            
     }
     refreshPosition();
   }, true);
