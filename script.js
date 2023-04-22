@@ -25,11 +25,11 @@ function UpdateXPos(distance) {
     manPos.x = manPos.x + distance;
     // Update x-axis position at the edge.
    
-    if (manPos.x <= 100) {
-      manPos.x = 100;
+    if (manPos.x <= 0) {
+      manPos.x = 1;
 
-    } else if (manPos.x >= 500) {
-      manPos.x = 500;
+    } else if (manPos.x >= 1101) {
+      manPos.x = 1100;
     }
 
   }

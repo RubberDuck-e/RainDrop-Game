@@ -1,6 +1,6 @@
 .game {
     position : fixed;
-   width: 800px;
+   width: 1300px;
     top : 50%;
     left : 50%;
    height: 700px;
@@ -14,7 +14,7 @@
     position: relative;
     width: 200px;
     height: 200px;
-    transform: translate(140%,250%);
+    transform: translate(550px,500px);
     z-index: 10;
   }
 
@@ -35,7 +35,7 @@
     position: relative;
     width: 180px;
     height: 180px;
-    transform: translate(65%,218%);
+    transform: translate(388px,388px);
     z-index: -5;
   }
  
