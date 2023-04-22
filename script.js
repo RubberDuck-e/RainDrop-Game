@@ -2,10 +2,10 @@ let man = document.getElementById("man");
 //let drops = document.getElementById("drops");
 let umbrella = document.getElementById("umbrella");
 let umbrellaOpen = true;
-let moveRate = 200;
+let moveRate = 225;
 
 let manPos = {
-    x : 300,
+    x : 550,
     y : 500
 }
 function refreshPosition(UmbrellaXOffsetting) {
@@ -23,13 +23,14 @@ function refreshPosition(UmbrellaXOffsetting) {
   // Update x-axis position.
 function UpdateXPos(distance) {
     manPos.x = manPos.x + distance;
+
     // Update x-axis position at the edge.
    
-    if (manPos.x <= 0) {
-      manPos.x = 1;
+    if (manPos.x <= 99) {
+      manPos.x = 100;
 
-    } else if (manPos.x >= 1101) {
-      manPos.x = 1100;
+    } else if (manPos.x >= 1001) {
+      manPos.x = 1000;
     }
 
   }
