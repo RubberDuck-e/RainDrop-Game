@@ -1,6 +1,8 @@
 let man = document.getElementById("man");
 //let drops = document.getElementById("drops");
 let umbrella = document.getElementById("umbrella");
+let droplet = document.getElementById("droplet");
+let cash = document.getElementById("cash");
 let umbrellaOpen = true;
 let moveRate = 225;
 
