@@ -18,12 +18,24 @@
     z-index: 10;
   }
 
-  .items {
-    width: 20px;
-    height: 40px;
+#items {
+    width: 200px;
+    height: 200px;
     position: relative;
     
   } 
+  .drops{
+    position: relative;
+    width: 200px;
+    height: 200px;
+     transform: translate(388px);
+
+  }
+  .cash{
+    position: relative;
+    width: 100px;
+    height: 100px;
+  }
 
   #umbrella {
     position: relative;

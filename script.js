@@ -1,14 +1,39 @@
 let man = document.getElementById("man");
 //let drops = document.getElementById("drops");
 let umbrella = document.getElementById("umbrella");
-let droplet = document.getElementById("droplet");
-let cash = document.getElementById("cash");
+let items = document.getElementById("items");
 let umbrellaOpen = true;
 let moveRate = 225;
-
+let gameIsOn = true;
+let numItems = 3;
 let manPos = {
     x : 550,
     y : 500
+}
+
+while(gameIsOn){
+  for (let i = 0; i < numItems; i++) {
+    const drop = document.createElement("img");
+    drop.className = "droplet";
+    let z = Math.random() * 1000;
+    console.log("z: " + Math.random() + 1000);
+    drop.style.transform = "translate(" + z + "px)";
+    items.appendChild(drop);
+    const money = document.createElement("img");
+    money.className = "cash";
+    let p = Math.random() * 1000;
+    console.log("p: " + Math.random() + 1000);
+    money.style.transform = "translate(" + p + "px)";
+    items.appendChild(money);
+  }
+  updateItems();
+  gameIsOn = false;
+}
+
+function updateItems(){
+  let yer = drop.y +5;
+  drop.style.transform = "translate(" + drop.x + "px," + yer + "px)";
+  requestAnimationFrame(updateItems);
 }
 function refreshPosition(UmbrellaXOffsetting) {
     let x = manPos.x;
