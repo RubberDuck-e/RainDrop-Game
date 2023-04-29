@@ -11,29 +11,39 @@ let manPos = {
     y : 500
 }
 
-while(gameIsOn){
   for (let i = 0; i < numItems; i++) {
     const drop = document.createElement("img");
     drop.className = "droplet";
     let z = Math.random() * 1000;
-    console.log("z: " + Math.random() + 1000);
-    drop.style.transform = "translate(" + z + "px)";
+    console.log("z: " + z);
+    drop.style.transform = `translate(${z}px, ${20}px)`;
     items.appendChild(drop);
     const money = document.createElement("img");
     money.className = "cash";
     let p = Math.random() * 1000;
-    console.log("p: " + Math.random() + 1000);
-    money.style.transform = "translate(" + p + "px)";
+    console.log("p: " + p);
+    money.style.transform = `translate(${p}px, ${20}px)`;
     items.appendChild(money);
   }
   updateItems();
-  gameIsOn = false;
-}
 
 function updateItems(){
-  let yer = drop.y +5;
-  drop.style.transform = "translate(" + drop.x + "px," + yer + "px)";
-  requestAnimationFrame(updateItems);
+  const drops = document.getElementsByClassName("droplet");
+  const cashs = document.getElementsByClassName("cash");
+
+  for (let i = 0; i < drops.length; i++) {
+    const droplet = drops[i];
+
+  const y = parseFloat(droplet.style.transform.replace(/.*translateY\((.*)\).*/, "$1")) || 0;
+  droplet.style.transform = `translateY(${y + 5}px)`;
+ 
+}
+for (let i = 0; i < cashs.length; i++) {
+  const cash = cashs[i];
+  const y = parseFloat(cash.style.transform.replace(/.*translateY\((.*)\).*/, "$1")) || 0;
+  cash.style.transform = `translateY(${y + 5}px)`;
+}
+ requestAnimationFrame(updateItems);
 }
 function refreshPosition(UmbrellaXOffsetting) {
     let x = manPos.x;
