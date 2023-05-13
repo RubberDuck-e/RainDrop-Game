@@ -5,7 +5,7 @@ let items = document.getElementById("items");
 let umbrellaOpen = true;
 let moveRate = 225;
 let gameIsOn = true;
-let numItems = 3;
+let numItems = 2;
 let manPos = {
     x : 550,
     y : 500
@@ -14,15 +14,18 @@ let manPos = {
   for (let i = 0; i < numItems; i++) {
     const drop = document.createElement("img");
     drop.className = "droplet";
+    drop.src = "img/DropletGame.png";
     let z = Math.random() * 1000;
     console.log("z: " + z);
-    drop.style.transform = `translate(${z}px, ${20}px)`;
+    drop.style.transform =   "translate(" + z + "px," + 20 + "px)";
+    console.log(drop.style.transform);
     items.appendChild(drop);
     const money = document.createElement("img");
     money.className = "cash";
+    money.src = "img/CashGame.png";
     let p = Math.random() * 1000;
     console.log("p: " + p);
-    money.style.transform = `translate(${p}px, ${20}px)`;
+    money.style.transform = "translate(" + p + "px," + 20 + "px)";
     items.appendChild(money);
   }
   updateItems();
@@ -33,16 +36,19 @@ function updateItems(){
 
   for (let i = 0; i < drops.length; i++) {
     const droplet = drops[i];
+    console.log("before translate y" + droplet.style.transform);
+    const x = parseFloat(droplet.style.transform.substring(droplet.style.transform.indexOf("(")+1,droplet.style.transform.indexOf("px")));
+    const y = parseFloat(droplet.style.transform.substring(droplet.style.transform.indexOf(",")+1,droplet.style.transform.indexOf("px)")));
+    droplet.style.transform = "translate(" + x + "px," + (y+5) + "px)";
+    console.log("after translate y" + droplet.style.transform);
 
-  const y = parseFloat(droplet.style.transform.replace(/.*translateY\((.*)\).*/, "$1")) || 0;
-  droplet.style.transform = `translateY(${y + 5}px)`;
- 
-}
-for (let i = 0; i < cashs.length; i++) {
-  const cash = cashs[i];
-  const y = parseFloat(cash.style.transform.replace(/.*translateY\((.*)\).*/, "$1")) || 0;
-  cash.style.transform = `translateY(${y + 5}px)`;
-}
+  }
+  for (let i = 0; i < cashs.length; i++) {
+    const cash = cashs[i];
+    const x = parseFloat(cash.style.transform.substring(cash.style.transform.indexOf("(")+1,cash.style.transform.indexOf("px")));
+    const y = parseFloat(cash.style.transform.substring(cash.style.transform.indexOf(",")+1,cash.style.transform.indexOf("px)")));
+    cash.style.transform = "translate(" + x + "px," + (y+5) + "px)";
+  }
  requestAnimationFrame(updateItems);
 }
 function refreshPosition(UmbrellaXOffsetting) {
