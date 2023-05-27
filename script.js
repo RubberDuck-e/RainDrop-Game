@@ -15,7 +15,7 @@ let manPos = {
     const drop = document.createElement("img");
     drop.className = "droplet";
     drop.src = "img/DropletGame.png";
-    let z = Math.random() * 1000;
+    let z = Math.random() * 775;
     console.log("z: " + z);
     drop.style.transform =   "translate(" + z + "px," + 20 + "px)";
     console.log(drop.style.transform);
@@ -23,7 +23,7 @@ let manPos = {
     const money = document.createElement("img");
     money.className = "cash";
     money.src = "img/CashGame.png";
-    let p = Math.random() * 1000;
+    let p = Math.random() * 775;
     console.log("p: " + p);
     money.style.transform = "translate(" + p + "px," + 20 + "px)";
     items.appendChild(money);
