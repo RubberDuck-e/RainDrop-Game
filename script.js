@@ -15,7 +15,7 @@ let manPos = {
     const drop = document.createElement("img");
     drop.className = "droplet";
     drop.src = "img/DropletGame.png";
-    let z = Math.random() * 775;
+    let z = RandomXPos();
     console.log("z: " + z);
     drop.style.transform =   "translate(" + z + "px," + 20 + "px)";
     console.log(drop.style.transform);
@@ -24,7 +24,7 @@ let manPos = {
     const money = document.createElement("img");
     money.className = "cash";
     money.src = "img/CashGame.png";
-    let p = Math.random() * 775;
+    let p = RandomXPos();
     console.log("p: " + p);
     money.style.transform = "translate(" + p + "px," + 20 + "px)";
     money.style.display = "none";
@@ -41,13 +41,17 @@ function updateItems(){
     const displayStyle = window.getComputedStyle(droplet).getPropertyValue("display");
 console.log(displayStyle);
       if(displayStyle == "none" ){
-
+        droplet.style.transform = `translate(${RandomXPos()}px, 20px)`;
+        droplet.style.display = "inline";
       }else{
-    console.log("before translate y" + droplet.style.transform);
-    const x = parseFloat(droplet.style.transform.substring(droplet.style.transform.indexOf("(")+1,droplet.style.transform.indexOf("px")));
-    const y = parseFloat(droplet.style.transform.substring(droplet.style.transform.indexOf(",")+1,droplet.style.transform.indexOf("px)")));
-    droplet.style.transform = "translate(" + x + "px," + (y+5) + "px)";
-    console.log("after translate y" + droplet.style.transform);
+        console.log("before translate y" + droplet.style.transform);
+        const x = parseFloat(droplet.style.transform.substring(droplet.style.transform.indexOf("(")+1,droplet.style.transform.indexOf("px")));
+        const y = parseFloat(droplet.style.transform.substring(droplet.style.transform.indexOf(",")+1,droplet.style.transform.indexOf("px)")));
+        droplet.style.transform = "translate(" + x + "px," + (y+5) + "px)";
+        console.log("after translate y" + droplet.style.transform);
+        if(y > 550){
+          droplet.style.transform = `translate(${RandomXPos()}px, 20px)`;
+        }
       }
   }
   for (let i = 0; i < cashs.length; i++) {
@@ -55,13 +59,18 @@ console.log(displayStyle);
     const displayStyle = window.getComputedStyle(cash).getPropertyValue("display");
 console.log(displayStyle);
       if(displayStyle == "none" ){
-
+        cash.style.transform = `translate(${RandomXPos()}px, 20px)`;
+        cash.style.display = "inline";
       }else{
-    const x = parseFloat(cash.style.transform.substring(cash.style.transform.indexOf("(")+1,cash.style.transform.indexOf("px")));
-    const y = parseFloat(cash.style.transform.substring(cash.style.transform.indexOf(",")+1,cash.style.transform.indexOf("px)")));
-    cash.style.transform = "translate(" + x + "px," + (y+5) + "px)";
+        const x = parseFloat(cash.style.transform.substring(cash.style.transform.indexOf("(")+1,cash.style.transform.indexOf("px")));
+        const y = parseFloat(cash.style.transform.substring(cash.style.transform.indexOf(",")+1,cash.style.transform.indexOf("px)")));
+        cash.style.transform = "translate(" + x + "px," + (y+5) + "px)";
+        if(y > 550){
+          cash.style.transform = `translate(${RandomXPos()}px, 20px)`;
+        }
   }
 }
+
  requestAnimationFrame(updateItems);
 }
 function refreshPosition(UmbrellaXOffsetting) {
@@ -90,6 +99,14 @@ function UpdateXPos(distance) {
     }
 
   }
+
+function RandomXPos(){
+  let value = 0;
+  while((1> value)||(value >320)){
+  value = Math.random() * 200;
+  }
+return value;
+}
 
 window.addEventListener("keydown", function (event) {
 let UmbrellaXOffset = 163;
