@@ -30,13 +30,13 @@
     
   } 
   .droplet{
-    position: relative;
+    position: absolute;
     width: 150px;
     height: 150px;
     transform: translate(38px,38px);
   }
   .cash{
-    position: relative;
+    position: absolute;
     width: 120px;
     height: 120px;
   }

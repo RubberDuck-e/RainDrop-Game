@@ -11,67 +11,40 @@ let manPos = {
     y : 500
 }
 
-  for (let i = 0; i < numItems; i++) {
-    const drop = document.createElement("img");
-    drop.className = "droplet";
-    drop.src = "img/DropletGame.png";
-    let z = RandomXPos();
-    console.log("z: " + z);
-    drop.style.transform =   "translate(" + z + "px," + 20 + "px)";
-    console.log(drop.style.transform);
-    drop.style.display = "none";
-    items.appendChild(drop);
-    const money = document.createElement("img");
-    money.className = "cash";
-    money.src = "img/CashGame.png";
-    let p = RandomXPos();
-    console.log("p: " + p);
-    money.style.transform = "translate(" + p + "px," + 20 + "px)";
-    money.style.display = "none";
-    items.appendChild(money);
-  }
-  updateItems();
+let itemList = []; // Array to hold drop and cash items
 
-function updateItems(){
-  const drops = document.getElementsByClassName("droplet");
-  const cashs = document.getElementsByClassName("cash");
+// Function to create and drop a single item at random intervals
+function spawnItem() {
+    const isDrop = Math.random() < 0.5; // Randomly choose between drop and cash
+    const item = document.createElement("img");
+    item.className = isDrop ? "droplet" : "cash";
+    item.src = isDrop ? "img/DropletGame.png" : "img/CashGame.png";
+    item.style.transform = `translate(${RandomXPos()}px, 20px)`;
+    items.appendChild(item);
+    itemList.push(item); // Add item to the array
 
-  for (let i = 0; i < drops.length; i++) {
-    const droplet = drops[i];
-    const displayStyle = window.getComputedStyle(droplet).getPropertyValue("display");
-console.log(displayStyle);
-      if(displayStyle == "none" ){
-        droplet.style.transform = `translate(${RandomXPos()}px, 20px)`;
-        droplet.style.display = "inline";
-      }else{
-        console.log("before translate y" + droplet.style.transform);
-        const x = parseFloat(droplet.style.transform.substring(droplet.style.transform.indexOf("(")+1,droplet.style.transform.indexOf("px")));
-        const y = parseFloat(droplet.style.transform.substring(droplet.style.transform.indexOf(",")+1,droplet.style.transform.indexOf("px)")));
-        droplet.style.transform = "translate(" + x + "px," + (y+5) + "px)";
-        console.log("after translate y" + droplet.style.transform);
-        if(y > 550){
-          droplet.style.transform = `translate(${RandomXPos()}px, 20px)`;
-        }
-      }
-  }
-  for (let i = 0; i < cashs.length; i++) {
-    const cash = cashs[i];
-    const displayStyle = window.getComputedStyle(cash).getPropertyValue("display");
-console.log(displayStyle);
-      if(displayStyle == "none" ){
-        cash.style.transform = `translate(${RandomXPos()}px, 20px)`;
-        cash.style.display = "inline";
-      }else{
-        const x = parseFloat(cash.style.transform.substring(cash.style.transform.indexOf("(")+1,cash.style.transform.indexOf("px")));
-        const y = parseFloat(cash.style.transform.substring(cash.style.transform.indexOf(",")+1,cash.style.transform.indexOf("px)")));
-        cash.style.transform = "translate(" + x + "px," + (y+5) + "px)";
-        if(y > 550){
-          cash.style.transform = `translate(${RandomXPos()}px, 20px)`;
-        }
-  }
+    setTimeout(spawnItem, getRandomInterval());
 }
 
- requestAnimationFrame(updateItems);
+function getRandomInterval() {
+    return Math.random() * 1000; // Random interval between 0 and 1 second
+}
+
+// Function to update the position of items and remove them if they hit the bottom
+function updateItems() {
+    for (let i = 0; i < itemList.length; i++) {
+        const item = itemList[i];
+        const [x, y] = item.style.transform.match(/-?\d+\.?\d*/g).map(Number);
+        item.style.transform = `translate(${x}px, ${y + 5}px)`;
+
+        if (y > 550) {
+            item.remove();
+            itemList.splice(i, 1); // Remove item from the array
+            i--; // Adjust index after removal
+        }
+    }
+
+    requestAnimationFrame(updateItems);
 }
 function refreshPosition(UmbrellaXOffsetting) {
     let x = manPos.x;
@@ -102,8 +75,8 @@ function UpdateXPos(distance) {
 
 function RandomXPos(){
   let value = 0;
-  while((1> value)||(value >320)){
-  value = Math.random() * 200;
+  while((99> value)||(value >1001)){
+  value = Math.random() * 1000;
   }
 return value;
 }
@@ -136,3 +109,6 @@ let UmbrellaXOffset = 163;
         }
     }
   }, true);
+
+  spawnItem();
+updateItems();
