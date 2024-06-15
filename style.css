@@ -11,7 +11,7 @@
   }
 
   #man {
-    position: relative;
+    position: absolute;
     width: 200px;
     height: 200px;
     transform: translate(550px,500px);
@@ -21,19 +21,16 @@
 #items {
     width: 1300px;
     height: 700px;
-    left : 50%;
-    top: 21%;
     position: relative;
     border: 1px solid black;
     margin: auto;
-    transform : translate(-50%, -50%);
+    overflow: hidden;
     
   } 
   .droplet{
     position: absolute;
     width: 150px;
     height: 150px;
-    transform: translate(38px,38px);
   }
   .cash{
     position: absolute;
@@ -42,10 +39,10 @@
   }
 
   #umbrella {
-    position: relative;
+    position: absolute;
     width: 180px;
     height: 180px;
-    transform: translate(388px,388px);
+    transform: translate(592px,410px);
     z-index: -5;
   }
  

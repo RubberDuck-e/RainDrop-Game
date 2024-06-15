@@ -1,5 +1,4 @@
 let man = document.getElementById("man");
-//let drops = document.getElementById("drops");
 let umbrella = document.getElementById("umbrella");
 let items = document.getElementById("items");
 let umbrellaOpen = true;
@@ -90,7 +89,7 @@ let UmbrellaXOffset = 163;
         //going right
             document.getElementById("man").src = "img/businessmanRight.png";
             UpdateXPos(moveRate);
-            UmbrellaXOffset= -223;
+            UmbrellaXOffset= 120;
             refreshPosition(UmbrellaXOffset);
     } else if(event.code === "ArrowLeft"){
         //going Left
