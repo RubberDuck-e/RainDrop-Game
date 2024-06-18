@@ -2,12 +2,17 @@ let man = document.getElementById("man");
 let umbrella = document.getElementById("umbrella");
 let items = document.getElementById("items");
 let umbrellaOpen = true;
-let moveRate = 225;
+let moveRate = 110;
 let gameIsOn = true;
 let numItems = 4;
+let UmbrellaXOffset = 62;
 let manPos = {
     x : 550,
     y : 500
+}
+let umbPos = {
+  x :592,
+  y : 410
 }
 
 let itemList = []; // Array to hold drop and cash items
@@ -46,57 +51,68 @@ function updateItems() {
     requestAnimationFrame(updateItems);
 }
 function refreshPosition(UmbrellaXOffsetting) {
-    let x = manPos.x;
-    let y = manPos.y;
-   console.log("x"+ x);
+   let x = manPos.x;
+   let y = manPos.y;
    man.style.transform = "translate(" + x + "px," + y +"px)";
    //umbrella offset
-    x+=UmbrellaXOffsetting;
-    y-=110;
-    console.log("brellax"+ x);
-   umbrella.style.transform = "translate(" + x + "px," + y + "px)";
+   umbPos.x = umbPos.x + UmbrellaXOffsetting;
+   //umbrella range limit
+    if (umbPos.x <= 41) {
+      umbPos.x = 42;
+    } else if (umbPos.x >= 1083) {
+      umbPos.x = 1082;
+    }
+   umbrella.style.transform = "translate(" + umbPos.x + "px," + umbPos.y + "px)";
   }
 
   // Update x-axis position.
 function UpdateXPos(distance) {
     manPos.x = manPos.x + distance;
-
     // Update x-axis position at the edge.
-   
-    if (manPos.x <= 99) {
-      manPos.x = 100;
-
-    } else if (manPos.x >= 1001) {
-      manPos.x = 1000;
+    if (manPos.x <= -1) {
+      manPos.x = 0;
+    } else if (manPos.x >= 1101) {
+      manPos.x = 1100;
     }
-
   }
 
 function RandomXPos(){
   let value = 0;
   while((99> value)||(value >1001)){
-  value = Math.random() * 1000;
+    value = Math.random() * 1000;
   }
 return value;
 }
 
 window.addEventListener("keydown", function (event) {
-let UmbrellaXOffset = 163;
+
     if(event.defaultPrevented){
         return;
     }
     if(event.code === "ArrowRight"){
-        //going right
+        //going right from facing left
+        if(!(man.src.includes( "img/businessmanRight.png"))){
             document.getElementById("man").src = "img/businessmanRight.png";
             UpdateXPos(moveRate);
-            UmbrellaXOffset= 120;
-            refreshPosition(UmbrellaXOffset);
+            refreshPosition(moveRate-60);
+        }else{
+            //just going right again
+            document.getElementById("man").src = "img/businessmanRight.png";
+            UpdateXPos(moveRate);
+            refreshPosition(moveRate);
+        }
     } else if(event.code === "ArrowLeft"){
-        //going Left
+        //going Left from facing right 
+        if(!(man.src.includes( "img/businessmanLeft.png"))){
             document.getElementById("man").src = "img/businessmanLeft.png";
-            UpdateXPos(-moveRate); 
-            UmbrellaXOffset = UmbrellaXOffset*-1;
-            refreshPosition(UmbrellaXOffset);
+            UpdateXPos(-moveRate);
+            refreshPosition(-moveRate+60);
+        }else{
+          //just going left again
+            document.getElementById("man").src = "img/businessmanLeft.png";
+            UpdateXPos(-moveRate);
+            refreshPosition(-moveRate);
+        }
     }else if(event.code=== "Space"){
       //Opening and Closing umbrella
         if(umbrellaOpen){
