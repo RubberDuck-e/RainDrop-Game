@@ -45,6 +45,10 @@ function updateItems() {
             item.remove();
             itemList.splice(i, 1); // Remove item from the array
             i--; // Adjust index after removal
+        }else if((x>manPos.x-50) &&(x<manPos.x+200)&&(y>manPos.y-100)){
+          item.remove();
+          itemList.splice(i, 1); // Remove item from the array
+          i--; // Adjust index after removal
         }
     }
 
@@ -85,10 +89,12 @@ return value;
 }
 
 window.addEventListener("keydown", function (event) {
+  
 
     if(event.defaultPrevented){
         return;
     }
+    event.preventDefault(); // Prevent the default action for arrow keys
     if(event.code === "ArrowRight"){
         //going right from facing left
         if(!(man.src.includes( "img/businessmanRight.png"))){
