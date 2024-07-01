@@ -13,8 +13,8 @@
   #man {
     position: absolute;
     width: 200px;
-    height: 200px;
-    transform: translate(550px,500px);
+    height: 200px; 
+    transform : translate(-50%, -50%);
     z-index: 10;
   }
 
@@ -31,18 +31,20 @@
     position: absolute;
     width: 150px;
     height: 150px;
+    transform : translate(-50%, -50%);
   }
   .cash{
     position: absolute;
     width: 120px;
     height: 120px;
+    transform : translate(-50%, -50%);
   }
 
   #umbrella {
     position: absolute;
     width: 180px;
     height: 180px;
-    transform: translate(592px,410px);
+    transform : translate(-50%, -50%);
     z-index: -5;
   }
  

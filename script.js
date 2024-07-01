@@ -2,18 +2,18 @@ let man = document.getElementById("man");
 let umbrella = document.getElementById("umbrella");
 let items = document.getElementById("items");
 let umbrellaOpen = true;
-let moveRate = 110;
+let moveRate = 100;
 let gameIsOn = true;
 let numItems = 4;
 let UmbrellaXOffset = 62;
 let manPos = {
-    x : 550,
-    y : 500
-}
+  x: 650, // Centered initial x position
+  y: 600  // Centered initial y position
+};
 let umbPos = {
-  x :592,
-  y : 410
-}
+  x: 682, // Centered initial x position
+  y: 500  // Centered initial y position
+};
 
 let itemList = []; // Array to hold drop and cash items
 
@@ -23,29 +23,29 @@ function spawnItem() {
     const item = document.createElement("img");
     item.className = isDrop ? "droplet" : "cash";
     item.src = isDrop ? "img/DropletGame.png" : "img/CashGame.png";
-    item.style.transform = `translate(${RandomXPos()}px, 20px)`;
+    item.style.transform = `translate(${RandomXPos()}px, 20px) translate(-50%, -50%)`;
     items.appendChild(item);
     itemList.push(item); // Add item to the array
 
     setTimeout(spawnItem, getRandomInterval());
 }
-
+// Random interval between 0 and 1 second
 function getRandomInterval() {
-    return Math.random() * 1000; // Random interval between 0 and 1 second
+    return Math.random() * 1000; 
 }
 
-// Function to update the position of items and remove them if they hit the bottom
+// Function to update the position of items after creation and remove them if they hit the bottom
 function updateItems() {
     for (let i = 0; i < itemList.length; i++) {
         const item = itemList[i];
         const [x, y] = item.style.transform.match(/-?\d+\.?\d*/g).map(Number);
-        item.style.transform = `translate(${x}px, ${y + 5}px)`;
+        item.style.transform = `translate(${x}px, ${y + 5}px) translate(-50%, -50%)`;
 
-        if (y > 550) {
+        if (y > 550) {//removal at bottom
             item.remove();
             itemList.splice(i, 1); // Remove item from the array
             i--; // Adjust index after removal
-        }else if((x>manPos.x-50) &&(x<manPos.x+200)&&(y>manPos.y-100)){
+        }else if((x>manPos.x-50) &&(x<manPos.x+200)&&(y>manPos.y-100)){//removal at man collision
           item.remove();
           itemList.splice(i, 1); // Remove item from the array
           i--; // Adjust index after removal
@@ -54,32 +54,34 @@ function updateItems() {
 
     requestAnimationFrame(updateItems);
 }
+//refreshes the position of the umbrella according to the man's movement
 function refreshPosition(UmbrellaXOffsetting) {
-   let x = manPos.x;
-   let y = manPos.y;
-   man.style.transform = "translate(" + x + "px," + y +"px)";
    //umbrella offset
    umbPos.x = umbPos.x + UmbrellaXOffsetting;
    //umbrella range limit
-    if (umbPos.x <= 41) {
-      umbPos.x = 42;
-    } else if (umbPos.x >= 1083) {
-      umbPos.x = 1082;
+    if (umbPos.x < 182) {
+      umbPos.x = 182;
+    } else if (umbPos.x > 1122) {
+      umbPos.x = 1122;
     }
-   umbrella.style.transform = "translate(" + umbPos.x + "px," + umbPos.y + "px)";
+    umbrella.style.transform = `translate(${umbPos.x}px, ${umbPos.y}px) translate(-50%, -50%)`;
   }
 
-  // Update x-axis position.
+  // Update x-axis position of the man 
 function UpdateXPos(distance) {
     manPos.x = manPos.x + distance;
     // Update x-axis position at the edge.
-    if (manPos.x <= -1) {
-      manPos.x = 0;
-    } else if (manPos.x >= 1101) {
-      manPos.x = 1100;
+    if (manPos.x < 150) {
+      manPos.x = 150;
+    } else if (manPos.x > 1150) {
+      manPos.x = 1150;
     }
+    let x = manPos.x;
+   let y = manPos.y;
+   man.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
   }
 
+//generates the random x pos for falling items
 function RandomXPos(){
   let value = 0;
   while((99> value)||(value >1001)){
@@ -88,6 +90,9 @@ function RandomXPos(){
 return value;
 }
 
+
+
+//player inputs
 window.addEventListener("keydown", function (event) {
   
 
@@ -130,6 +135,15 @@ window.addEventListener("keydown", function (event) {
         }
     }
   }, true);
+//sets the initial position and centering of the man and umbrella
+  function setInitialPositions() {
+    man.style.transform = `translate(${manPos.x}px, ${manPos.y}px) translate(-50%, -50%)`;
+    umbrella.style.transform = `translate(${umbPos.x}px, ${umbPos.y}px) translate(-50%, -50%)`;
+}
 
-  spawnItem();
-updateItems();
+// Run the game setup after the DOM has fully loaded
+window.onload = function() {
+    setInitialPositions();
+    spawnItem();
+    updateItems();
+};
