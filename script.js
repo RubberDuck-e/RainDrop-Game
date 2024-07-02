@@ -6,6 +6,7 @@ let moveRate = 100;
 let gameIsOn = true;
 let numItems = 4;
 let UmbrellaXOffset = 62;
+let score = 0;
 let manPos = {
   x: 650, // Centered initial x position
   y: 600  // Centered initial y position
@@ -39,13 +40,24 @@ function updateItems() {
     for (let i = 0; i < itemList.length; i++) {
         const item = itemList[i];
         const [x, y] = item.style.transform.match(/-?\d+\.?\d*/g).map(Number);
+        let halfHeight = 0.5*item.clientWidth;
         item.style.transform = `translate(${x}px, ${y + 5}px) translate(-50%, -50%)`;
 
-        if (y > 550) {//removal at bottom
+        if (y > 700-halfHeight) {//removal at bottom
             item.remove();
             itemList.splice(i, 1); // Remove item from the array
             i--; // Adjust index after removal
-        }else if((x>manPos.x-50) &&(x<manPos.x+200)&&(y>manPos.y-100)){//removal at man collision
+        }else if((x>(manPos.x-halfHeight)) &&(x<(manPos.x+halfHeight))&&(y>(manPos.y-halfHeight-40))){//removal at man collision
+          item.remove();
+          itemList.splice(i, 1); // Remove item from the array
+          i--; // Adjust index after removal
+          if(item.src.includes("img/CashGame.png")){//points increase
+            score++;
+            console.log(score);
+          }else{//game ends
+            console.log("game over");
+          }
+        }else if((x>umbPos.x-90)&&(x<(umbPos.x+90))&&(y>umbPos.y-45)&&umbrellaOpen){//removal at umbrella collision
           item.remove();
           itemList.splice(i, 1); // Remove item from the array
           i--; // Adjust index after removal
