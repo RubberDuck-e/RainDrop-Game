@@ -53,8 +53,9 @@ function updateItems() {
           i--; // Adjust index after removal
           if(item.src.includes("img/CashGame.png")){//points increase
             score++;
-            console.log(score);
+
           }else{//game ends
+
             console.log("game over");
           }
         }else if((x>umbPos.x-90)&&(x<(umbPos.x+90))&&(y>umbPos.y-45)&&umbrellaOpen){//removal at umbrella collision
@@ -66,6 +67,17 @@ function updateItems() {
 
     requestAnimationFrame(updateItems);
 }
+
+// Function to update the text content of the element
+function updateText() {
+  // Get the HTML element by its id
+  let textElement = document.getElementById('dynamicText');
+
+  // Set the text content of the element
+  textElement.textContent = "Money:$" + score;
+  setInterval(updateText, 1000);
+}
+
 //refreshes the position of the umbrella according to the man's movement
 function refreshPosition(UmbrellaXOffsetting) {
    //umbrella offset
@@ -158,4 +170,5 @@ window.onload = function() {
     setInitialPositions();
     spawnItem();
     updateItems();
+    updateText();
 };
