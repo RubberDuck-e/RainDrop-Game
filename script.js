@@ -53,7 +53,6 @@ function updateItems() {
           i--; // Adjust index after removal
           if(item.src.includes("img/CashGame.png")){//points increase
             score++;
-
           }else{//game ends
 
             console.log("game over");
@@ -75,7 +74,7 @@ function updateText() {
 
   // Set the text content of the element
   textElement.textContent = "Money:$" + score;
-  setInterval(updateText, 1000);
+  setInterval(updateText, 1500);
 }
 
 //refreshes the position of the umbrella according to the man's movement
