@@ -1,12 +1,13 @@
+let gameIsOn = true;
 let man = document.getElementById("man");
 let umbrella = document.getElementById("umbrella");
 let items = document.getElementById("items");
 let umbrellaOpen = true;
 let moveRate = 100;
-let gameIsOn = true;
 let numItems = 4;
 let UmbrellaXOffset = 62;
 let score = 0;
+const maxItems = 50; // Maximum number of items to be handled at once
 let manPos = {
   x: 650, // Centered initial x position
   y: 600  // Centered initial y position
@@ -18,17 +19,53 @@ let umbPos = {
 
 let itemList = []; // Array to hold drop and cash items
 
+function promptMenu(){
+   // Show the main menu
+   document.getElementById('mainMenu').style.display = 'flex';
+
+   // Hide the game container
+   document.getElementById('gameContainer').style.display = 'none';
+
+  clearItems();
+
+   // Optionally, display a game over message or reset other game elements
+   if(score > 0){
+   alert('Game Over! Your score was: ' + score);
+   }
+  }
+
+  // Function to start the game
+function startGame() {
+  gameIsOn = true;
+  // Hide the main menu
+  document.getElementById('mainMenu').style.display = 'none';
+
+  // Show the game container
+  document.getElementById('gameContainer').style.display = 'flex';
+
+  // Reset the score and update the text
+  score = 0;
+
+  //call necesary functions
+    setInitialPositions();
+    spawnItem();
+    updateItems();
+    updateText();
+}
+
 // Function to create and drop a single item at random intervals
 function spawnItem() {
+  if (gameIsOn && itemList.length < maxItems) {
     const isDrop = Math.random() < 0.5; // Randomly choose between drop and cash
     const item = document.createElement("img");
     item.className = isDrop ? "droplet" : "cash";
     item.src = isDrop ? "img/DropletGame.png" : "img/CashGame.png";
     item.style.transform = `translate(${RandomXPos()}px, 20px) translate(-50%, -50%)`;
-    items.appendChild(item);
+    document.getElementById('items').appendChild(item);
     itemList.push(item); // Add item to the array
 
     setTimeout(spawnItem, getRandomInterval());
+  }
 }
 // Random interval between 0 and 1 second
 function getRandomInterval() {
@@ -47,15 +84,16 @@ function updateItems() {
             item.remove();
             itemList.splice(i, 1); // Remove item from the array
             i--; // Adjust index after removal
-        }else if((x>(manPos.x-halfHeight)) &&(x<(manPos.x+halfHeight))&&(y>(manPos.y-halfHeight-40))){//removal at man collision
+        }else if((x>(manPos.x-halfHeight)) &&(x<(manPos.x+halfHeight))&&(y>(manPos.y-halfHeight-40))&&!umbrellaOpen){//removal at man collision
           item.remove();
           itemList.splice(i, 1); // Remove item from the array
           i--; // Adjust index after removal
           if(item.src.includes("img/CashGame.png")){//points increase
             score++;
+            updateText();
           }else{//game ends
-
-            console.log("game over");
+            gameIsOn = false;
+            promptMenu();
           }
         }else if((x>umbPos.x-90)&&(x<(umbPos.x+90))&&(y>umbPos.y-45)&&umbrellaOpen){//removal at umbrella collision
           item.remove();
@@ -63,9 +101,10 @@ function updateItems() {
           i--; // Adjust index after removal
         }
     }
-
+    if(gameIsOn){
     requestAnimationFrame(updateItems);
-}
+    }
+  }
 
 // Function to update the text content of the element
 function updateText() {
@@ -74,7 +113,6 @@ function updateText() {
 
   // Set the text content of the element
   textElement.textContent = "Money:$" + score;
-  setInterval(updateText, 1500);
 }
 
 //refreshes the position of the umbrella according to the man's movement
@@ -113,6 +151,10 @@ function RandomXPos(){
 return value;
 }
 
+function clearItems() {
+  itemList.forEach(item => item.remove());
+  itemList = [];
+}
 
 
 //player inputs
@@ -166,8 +208,5 @@ window.addEventListener("keydown", function (event) {
 
 // Run the game setup after the DOM has fully loaded
 window.onload = function() {
-    setInitialPositions();
-    spawnItem();
-    updateItems();
-    updateText();
+    promptMenu();
 };
