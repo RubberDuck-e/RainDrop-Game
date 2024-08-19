@@ -222,6 +222,7 @@ window.addEventListener("keydown", function (event) {
     umbrella.style.transform = `translate(${682}px, ${500}px) translate(-50%, -50%)`;
     umbrellaOpen =  true;
     document.getElementById("umbrella").src = "img/UmbrellaOpen.png";
+    document.getElementById("man").src = "img/businessmanLeft.png";
     updatePos();
 }
 
