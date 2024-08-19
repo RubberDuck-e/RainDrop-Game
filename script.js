@@ -6,7 +6,7 @@ let umbrellaOpen = true;
 let moveRate = 100;
 let numItems = 4;
 let UmbrellaXOffset = 62;
-let score = 0;
+let score = -1;
 const maxItems = 50; // Maximum number of items to be handled at once
 let manPos = {
   x: 650, // Centered initial x position
@@ -26,12 +26,21 @@ function promptMenu(){
    // Hide the game container
    document.getElementById('gameContainer').style.display = 'none';
 
+    // Hide the dynamic text container
+    document.getElementById('dynamicTextContainer').style.display = 'none';
+
   clearItems();
 
-   // Optionally, display a game over message or reset other game elements
-   if(score > 0){
-   alert('Game Over! Your score was: ' + score);
+   // Display the last game's score
+   let scoreElement = document.getElementById('lastGameScore');
+   if (score >= 0) {
+     scoreElement.textContent = 'Game Over! Your score was: ' + score;
+   } else {
+     scoreElement.textContent = ''; // Clear the text if no score
    }
+
+    // Reset score to -1 after displaying it
+    score = -1;
   }
 
   // Function to start the game
@@ -43,11 +52,14 @@ function startGame() {
   // Show the game container
   document.getElementById('gameContainer').style.display = 'flex';
 
+   // Show the dynamic text container
+   document.getElementById('dynamicTextContainer').style.display = 'block';
+
   // Reset the score and update the text
   score = 0;
 
   //call necesary functions
-    setInitialPositions();
+    setInitialStatus();
     spawnItem();
     updateItems();
     updateText();
@@ -111,8 +123,12 @@ function updateText() {
   // Get the HTML element by its id
   let textElement = document.getElementById('dynamicText');
 
-  // Set the text content of the element
-  textElement.textContent = "Money:$" + score;
+   // Only display the score if it's not -1
+   if (score >= 0) {
+    textElement.textContent = "Money: " + score;
+} else {
+    textElement.textContent = ''; // Clear the text if the score is -1
+}
 }
 
 //refreshes the position of the umbrella according to the man's movement
@@ -201,11 +217,21 @@ window.addEventListener("keydown", function (event) {
     }
   }, true);
 //sets the initial position and centering of the man and umbrella
-  function setInitialPositions() {
-    man.style.transform = `translate(${manPos.x}px, ${manPos.y}px) translate(-50%, -50%)`;
-    umbrella.style.transform = `translate(${umbPos.x}px, ${umbPos.y}px) translate(-50%, -50%)`;
+  function setInitialStatus() {
+    man.style.transform = `translate(${650}px, ${600}px) translate(-50%, -50%)`;
+    umbrella.style.transform = `translate(${682}px, ${500}px) translate(-50%, -50%)`;
+    umbrellaOpen =  true;
+    document.getElementById("umbrella").src = "img/UmbrellaOpen.png";
+    updatePos();
 }
 
+//function to update the position variabblles when they are being initialized to their original positions
+function updatePos(){
+  manPos.x = 650;
+  manPos.y = 600;
+  umbPos.x = 682;
+  umbPos.y = 500;
+}
 // Run the game setup after the DOM has fully loaded
 window.onload = function() {
     promptMenu();

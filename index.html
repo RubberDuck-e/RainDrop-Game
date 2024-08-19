@@ -11,14 +11,19 @@
     <div id="mainMenu" class="menu">
       <h1>Main Menu</h1>
       <button onclick="startGame()">Start Game</button>
+      <p id="lastGameScore"></p> <!-- Placeholder for the last game's score -->
   </div>
+  
+  <!-- This is where we will display the dynamic text -->
+  <div id="dynamicTextContainer">
+    <p id="dynamicText"></p>
+  </div>
+
   <!-- Game Box-->
     <div id="gameContainer" class="game" tabindex="-1">  
       <img id="man" src="img/businessmanLeft.png" alt="man" tabindex="-1">
       <img id="umbrella" src="img/UmbrellaOpen.png" alt="umbrella" tabindex="-1">
       <div id="items" tabindex="-1"></div>
-       <!-- This is where we will display the dynamic text -->
-       <p id="dynamicText">Initial Text</p>
       </div>
     </div>
     <script src="script.js"></script>

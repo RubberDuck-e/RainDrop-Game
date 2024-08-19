@@ -18,6 +18,20 @@ body {
   text-align: center;
 }
 
+/* Dynamic Text Container Styles */
+#dynamicTextContainer {
+  position: fixed;
+  top: 800px; /* Adjust top position */
+  right: 220px; /* Adjust right position */
+  z-index: 100; /* Ensure it is above other elements */
+}
+
+/* Styles for the dynamic text */
+#dynamicText {
+  font-size: 18px;
+  color: #333;
+}
+
 .game {
     position : fixed;
    width: 1300px;
