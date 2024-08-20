@@ -1,4 +1,4 @@
-let gameIsOn = true;
+let gameIsOn = true;  //varraible to track game status
 let startTime = Date.now(); // Track the start time of the game
 const minInterval = 400; // Minimum interval in milliseconds
 const maxInterval = 1000; // Maximum initial interval in milliseconds
@@ -6,12 +6,12 @@ let intervalDecreaseRate = 0.01; // Rate at which the interval decreases
 let man = document.getElementById("man");
 let umbrella = document.getElementById("umbrella");
 let items = document.getElementById("items");
-let umbrellaOpen = true;
-let moveRate = 100;
-let numItems = 4;
-let UmbrellaXOffset = 62;
-let score = -1;
+let umbrellaOpen = true; //status of umbbrella
+let moveRate = 100; //the difference in movement for the man
+let UmbrellaXOffset = 62; //difference between the man and umbrellas position
+let score = -1; //score placeholder
 const maxItems = 70; // Maximum number of items to be handled at once
+
 let manPos = {
   x: 650, // Centered initial x position
   y: 600  // Centered initial y position
@@ -33,7 +33,8 @@ function promptMenu(){
     // Hide the dynamic text container
     document.getElementById('dynamicTextContainer').style.display = 'none';
 
-  clearItems();
+    // clears the array of items again
+    clearItems();
 
    // Display the last game's score
    let scoreElement = document.getElementById('lastGameScore');
@@ -123,6 +124,7 @@ function updateItems() {
           i--; // Adjust index after removal
         }
     }
+    //stops animation of gamescreen
     if(gameIsOn){
     requestAnimationFrame(updateItems);
     }
@@ -177,6 +179,7 @@ function RandomXPos(){
 return value;
 }
 
+//clears the list array just in case
 function clearItems() {
   itemList.forEach(item => item.remove());
   itemList = [];
@@ -186,7 +189,6 @@ function clearItems() {
 //player inputs
 window.addEventListener("keydown", function (event) {
   
-
     if(event.defaultPrevented){
         return;
     }
