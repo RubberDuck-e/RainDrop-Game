@@ -1,4 +1,8 @@
 let gameIsOn = true;
+let startTime = Date.now(); // Track the start time of the game
+const minInterval = 400; // Minimum interval in milliseconds
+const maxInterval = 1000; // Maximum initial interval in milliseconds
+let intervalDecreaseRate = 0.01; // Rate at which the interval decreases
 let man = document.getElementById("man");
 let umbrella = document.getElementById("umbrella");
 let items = document.getElementById("items");
@@ -7,7 +11,7 @@ let moveRate = 100;
 let numItems = 4;
 let UmbrellaXOffset = 62;
 let score = -1;
-const maxItems = 50; // Maximum number of items to be handled at once
+const maxItems = 70; // Maximum number of items to be handled at once
 let manPos = {
   x: 650, // Centered initial x position
   y: 600  // Centered initial y position
@@ -76,12 +80,18 @@ function spawnItem() {
     document.getElementById('items').appendChild(item);
     itemList.push(item); // Add item to the array
 
-    setTimeout(spawnItem, getRandomInterval());
+     // Calculate the current interval based on elapsed time
+     setTimeout(spawnItem, getRandomInterval());
   }
 }
-// Random interval between 0 and 1 second
+// Random interval between 0 and adjusted maxInterval
 function getRandomInterval() {
-    return Math.random() * 1000; 
+  const elapsedTime = Date.now() - startTime;
+  if(elapsedTime> 15000){
+      intervalDecreaseRate = 0.125;
+  }
+  let adjustedInterval = Math.max(minInterval, maxInterval - (elapsedTime * intervalDecreaseRate));
+  return adjustedInterval;
 }
 
 // Function to update the position of items after creation and remove them if they hit the bottom
@@ -96,7 +106,7 @@ function updateItems() {
             item.remove();
             itemList.splice(i, 1); // Remove item from the array
             i--; // Adjust index after removal
-        }else if((x>(manPos.x-halfHeight)) &&(x<(manPos.x+halfHeight))&&(y>(manPos.y-halfHeight-40))&&!umbrellaOpen){//removal at man collision
+        }else if((x>(manPos.x-halfHeight)) &&(x<(manPos.x+halfHeight))&&(y>(manPos.y-halfHeight-20))&&!umbrellaOpen){//removal at man collision
           item.remove();
           itemList.splice(i, 1); // Remove item from the array
           i--; // Adjust index after removal
