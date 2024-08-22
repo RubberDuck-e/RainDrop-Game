@@ -82,10 +82,4 @@ body {
     z-index: -5;
   }
 
-  /* Styles for the dynamic text */
-#dynamicText {
-  font-size: 18px;
-  color: #333;
-}
-
  
