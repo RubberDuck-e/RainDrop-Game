@@ -4,7 +4,7 @@
     "description": "A game about blocking rain with an umbrella to catch money",
     "manifest_version": 3,
     "author": "Jonathan Martin Lo",
-    "permissions": ["storage", "declarativeContent", "activeTab", "scripting"], 
+    "permissions": ["storage"], 
     "action": {
       "default_popup": "index.html",
       "default_title": "Money Rain"
