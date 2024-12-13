@@ -90,6 +90,7 @@ function spawnItem() {
 function increaseDropRate(){
   if(dropRate<25){
     dropRate++;
+    intervalDecreaseRate+=0.075;
   }
 }
 // Random interval between 0 and adjusted maxInterval
@@ -243,6 +244,8 @@ window.addEventListener("keydown", function (event) {
     man.style.transform = `translate(${650}px, ${600}px) translate(-50%, -50%)`;
     umbrella.style.transform = `translate(${682}px, ${500}px) translate(-50%, -50%)`;
     umbrellaOpen =  true;
+    dropRate = 5;
+    intervalDecreaseRate = 0.01;
     document.getElementById("umbrella").src = "img/UmbrellaOpen.png";
     document.getElementById("man").src = "img/businessmanLeft.png";
     updatePos();
