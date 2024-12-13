@@ -120,7 +120,7 @@ function updateItems() {
           i--; // Adjust index after removal
           if(item.src.includes("img/CashGame.png")){//points increase
             score++;
-            if((score%10)!=0){
+            if((score%10)==0){
               increaseDropRate();
             }
             updateText();
