@@ -11,7 +11,7 @@ let moveRate = 100; //the difference in movement for the man
 let UmbrellaXOffset = 62; //difference between the man and umbrellas position
 let score = -1; //score placeholder
 const maxItems = 70; // Maximum number of items to be handled at once
-
+let dropRate = 5;
 let manPos = {
   x: 650, // Centered initial x position
   y: 600  // Centered initial y position
@@ -85,6 +85,13 @@ function spawnItem() {
      setTimeout(spawnItem, getRandomInterval());
   }
 }
+
+//
+function increaseDropRate(){
+  if(dropRate<50){
+    dropRate+=2;
+  }
+}
 // Random interval between 0 and adjusted maxInterval
 function getRandomInterval() {
   const elapsedTime = Date.now() - startTime;
@@ -113,6 +120,9 @@ function updateItems() {
           i--; // Adjust index after removal
           if(item.src.includes("img/CashGame.png")){//points increase
             score++;
+            if((score%10)!=0){
+              increaseDropRate();
+            }
             updateText();
           }else{//game ends
             gameIsOn = false;
