@@ -108,7 +108,7 @@ function updateItems() {
         const item = itemList[i];
         const [x, y] = item.style.transform.match(/-?\d+\.?\d*/g).map(Number);
         let halfHeight = 0.5*item.clientWidth;
-        item.style.transform = `translate(${x}px, ${y + 5}px) translate(-50%, -50%)`;
+        item.style.transform = `translate(${x}px, ${y + dropRate}px) translate(-50%, -50%)`;
 
         if (y > 700-halfHeight) {//removal at bottom
             item.remove();
