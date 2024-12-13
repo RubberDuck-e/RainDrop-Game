@@ -88,8 +88,8 @@ function spawnItem() {
 
 //
 function increaseDropRate(){
-  if(dropRate<50){
-    dropRate+=2;
+  if(dropRate<25){
+    dropRate++;
   }
 }
 // Random interval between 0 and adjusted maxInterval
