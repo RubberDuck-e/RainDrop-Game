@@ -11,7 +11,8 @@ let moveRate = 100; //the difference in movement for the man
 let UmbrellaXOffset = 62; //difference between the man and umbrellas position
 let score = -1; //score placeholder
 const maxItems = 70; // Maximum number of items to be handled at once
-let dropRate = 5;
+let dropRate = 500;
+let Time = 0;
 let manPos = {
   x: 650, // Centered initial x position
   y: 600  // Centered initial y position
@@ -76,7 +77,7 @@ function spawnItem() {
     const isDrop = Math.random() < 0.5; // Randomly choose between drop and cash
     const item = document.createElement("img");
     item.className = isDrop ? "droplet" : "cash";
-    item.src = isDrop ? "img/DropletGame.png" : "img/CashGame.png";
+    item.src = isDrop ? "imgs/DropletGame.png" : "imgs/CashGame.png";
     item.style.transform = `translate(${RandomXPos()}px, 20px) translate(-50%, -50%)`;
     document.getElementById('items').appendChild(item);
     itemList.push(item); // Add item to the array
@@ -88,9 +89,9 @@ function spawnItem() {
 
 //
 function increaseDropRate(){
-  if(dropRate<25){
-    dropRate++;
-    intervalDecreaseRate+=0.075;
+  if(dropRate<1500){
+    dropRate+=1.5;
+    intervalDecreaseRate+=0.01;
   }
 }
 // Random interval between 0 and adjusted maxInterval
@@ -104,12 +105,18 @@ function getRandomInterval() {
 }
 
 // Function to update the position of items after creation and remove them if they hit the bottom
-function updateItems() {
+function updateItems(timestamp) {
+  const deltaTime = Time === 0
+        ? 0
+        : (timestamp - Time) / 1000;
+
+    Time = timestamp;
+    console.log("dropRate:", dropRate, "deltaTime:", deltaTime);
     for (let i = 0; i < itemList.length; i++) {
         const item = itemList[i];
         const [x, y] = item.style.transform.match(/-?\d+\.?\d*/g).map(Number);
         let halfHeight = 0.5*item.clientWidth;
-        item.style.transform = `translate(${x}px, ${y + dropRate}px) translate(-50%, -50%)`;
+        item.style.transform = `translate(${x}px, ${y + dropRate * deltaTime}px) translate(-50%, -50%)`;
 
         if (y > 700-halfHeight) {//removal at bottom
             item.remove();
@@ -119,7 +126,7 @@ function updateItems() {
           item.remove();
           itemList.splice(i, 1); // Remove item from the array
           i--; // Adjust index after removal
-          if(item.src.includes("img/CashGame.png")){//points increase
+          if(item.src.includes("imgs/CashGame.png")){//points increase
             score++;
             if((score%10)==0){
               increaseDropRate();
@@ -206,35 +213,35 @@ window.addEventListener("keydown", function (event) {
     event.preventDefault(); // Prevent the default action for arrow keys
     if(event.code === "ArrowRight"){
         //going right from facing left
-        if(!(man.src.includes( "img/businessmanRight.png"))){
-            document.getElementById("man").src = "img/businessmanRight.png";
+        if(!(man.src.includes( "imgs/businessmanRight.png"))){
+            document.getElementById("man").src = "imgs/businessmanRight.png";
             UpdateXPos(moveRate);
             refreshPosition(moveRate-60);
         }else{
             //just going right again
-            document.getElementById("man").src = "img/businessmanRight.png";
+            document.getElementById("man").src = "imgs/businessmanRight.png";
             UpdateXPos(moveRate);
             refreshPosition(moveRate);
         }
     } else if(event.code === "ArrowLeft"){
         //going Left from facing right 
-        if(!(man.src.includes( "img/businessmanLeft.png"))){
-            document.getElementById("man").src = "img/businessmanLeft.png";
+        if(!(man.src.includes( "imgs/businessmanLeft.png"))){
+            document.getElementById("man").src = "imgs/businessmanLeft.png";
             UpdateXPos(-moveRate);
             refreshPosition(-moveRate+60);
         }else{
           //just going left again
-            document.getElementById("man").src = "img/businessmanLeft.png";
+            document.getElementById("man").src = "imgs/businessmanLeft.png";
             UpdateXPos(-moveRate);
             refreshPosition(-moveRate);
         }
     }else if(event.code=== "Space"){
       //Opening and Closing umbrella
         if(umbrellaOpen){
-            document.getElementById("umbrella").src = "img/UmbrellaClose.png";
+            document.getElementById("umbrella").src = "imgs/UmbrellaClose.png";
             umbrellaOpen= false;
         }else{
-            document.getElementById("umbrella").src = "img/UmbrellaOpen.png";
+            document.getElementById("umbrella").src = "imgs/UmbrellaOpen.png";
             umbrellaOpen = true;
         }
     }
@@ -244,10 +251,10 @@ window.addEventListener("keydown", function (event) {
     man.style.transform = `translate(${650}px, ${600}px) translate(-50%, -50%)`;
     umbrella.style.transform = `translate(${682}px, ${500}px) translate(-50%, -50%)`;
     umbrellaOpen =  true;
-    dropRate = 5;
+    dropRate = 500;
     intervalDecreaseRate = 0.01;
-    document.getElementById("umbrella").src = "img/UmbrellaOpen.png";
-    document.getElementById("man").src = "img/businessmanLeft.png";
+    document.getElementById("umbrella").src = "imgs/UmbrellaOpen.png";
+    document.getElementById("man").src = "imgs/businessmanLeft.png";
     updatePos();
 }
 
